@@ -2,12 +2,11 @@ import styled from "styled-components";
 
 export const Panell = styled.div`
   display: flex;
+  flex-direction: column;
   margin: 8px;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  width: 220px;
   padding: 15px;
   border: 3px solid black;
   border-radius: 10px;
-  line-height: 1.7;
+  line-height: 2;
+  width: 180px;
 `;

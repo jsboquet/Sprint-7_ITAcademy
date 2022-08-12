@@ -1,51 +1,43 @@
 import { useState } from "react";
 import Panell from "./components/Panell";
+import Detalls from "./components/Detalls";
 
 function App() {
-
-  // Checkbox inputs del formulari
+  // Estat del conjunt de checkboxes del formulari
   const [serveis, setServeis] = useState({
     web: false,
     seo: false,
     ads: false,
   });
 
-  const [pressu, setPressu] = useState(0);
+  // Estat amb l'import del cost dels checkboxes
+  const [pressupostServeis, setPressupostServeis] = useState(0);
 
   const handleInputChange = (event) => {
     setServeis({
       ...serveis,
       [event.target.name]: event.target.checked,
     });
-    setPressu(
+    setPressupostServeis(
       event.target.checked
-        ? pressu + parseInt(event.target.value)
-        : pressu - parseInt(event.target.value)
+        ? pressupostServeis + parseInt(event.target.value)
+        : pressupostServeis - parseInt(event.target.value)
     );
   };
-  
-  // Text inputs del panell que apareix amb el checkbox "web"
-  const [details, setDetails] = useState({
-    pagines: 1,
-    idiomes: 1,
-  });
 
-  const handleDetailsChange = (event) => {
-    if (event.target.value.match("^[0-9]+$")) {
-      setDetails({
-        ...details,
-        [event.target.name]: parseInt(event.target.value),
-      });
-    }
-  };
+  // Destructuració del component Detalls
+  const {detalls, render} = Detalls();
 
-  const calcDetails = () => {
+  // Càlcul del cost afegit de les pàgines i els idiomes (detalls)
+  const calcDetalls = () => {
     let result = 0;
     if (serveis.web) {
-      result = details.idiomes * details.pagines * 30;
+      result = detalls.idiomes * detalls.pagines * 30;
     }
     return result;
   };
+
+  // Falta state del pressupost total!
 
   return (
     <>
@@ -58,16 +50,7 @@ function App() {
       />
       <label for="web"> Una pàgina web - 500 €</label>
       <br />
-      {serveis.web ? (
-        <Panell>
-          <label for="pagines">Pàgines: </label>
-          <input type="text" name="pagines" onInput={handleDetailsChange} placeholder="1"/>
-          <label for="idiomes">Idiomes: </label>
-          <input type="text" name="idiomes" onInput={handleDetailsChange} placeholder="1"/>
-        </Panell>
-      ) : (
-        <></>
-      )}
+      {serveis.web ? <Panell>{render}</Panell> : <></>}
       <input
         type="checkbox"
         name="seo"
@@ -84,7 +67,7 @@ function App() {
       />
       <label for="ads"> Una campanya de Google Ads - 200 €</label>
       <br />
-      <p>Preu: {pressu + calcDetails()} €</p>
+      <p>Preu: {pressupostServeis + calcDetalls()} €</p>
     </>
   );
 }
