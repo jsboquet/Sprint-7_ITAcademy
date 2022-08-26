@@ -1,43 +1,59 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Panell from "./components/Panell";
 import Detalls from "./components/Detalls";
 
 function App() {
   // Estat del conjunt de checkboxes del formulari
-  const [serveis, setServeis] = useState({
-    web: false,
-    seo: false,
-    ads: false,
+  const [serveis, setServeis] = useState(() => {
+    const localSaved = localStorage.getItem("serveis");
+    const estatInicial = JSON.parse(localSaved);
+    return {
+      web: {requested: estatInicial.web.requested || false, valor: 500},
+      seo: {requested: estatInicial.seo.requested || false, valor: 300},
+      ads: {requested: estatInicial.ads.requested || false, valor: 200},
+    };
   });
 
-  // Estat amb l'import del cost dels checkboxes
-  const [pressupostServeis, setPressupostServeis] = useState(0);
-
+  // Funció per quan canvien els checkbox
   const handleInputChange = (event) => {
     setServeis({
       ...serveis,
-      [event.target.name]: event.target.checked,
+      [event.target.name]: {
+        valor: parseInt(event.target.value),
+        requested: event.target.checked
+      },
     });
-    setPressupostServeis(
-      event.target.checked
-        ? pressupostServeis + parseInt(event.target.value)
-        : pressupostServeis - parseInt(event.target.value)
-    );
   };
 
   // Destructuració del component Detalls
-  const {detalls, render} = Detalls();
+  const { detalls, render } = Detalls();
 
-  // Càlcul del cost afegit de les pàgines i els idiomes (detalls)
-  const calcDetalls = () => {
-    let result = 0;
-    if (serveis.web) {
-      result = detalls.idiomes * detalls.pagines * 30;
+  // LocalStorage
+  useEffect(() => {
+    try {
+      window.localStorage.setItem("serveis", JSON.stringify(serveis));
+    } catch (error) {
+      console.log(error);
     }
-    return result;
-  };
+  }, [serveis]);
 
-  // Falta state del pressupost total!
+  // State amb el pressupost total!
+  const [total, setTotal] = useState(0);
+
+  useEffect(
+    () =>
+      setTotal(() => {
+        let valorSaved = 0;
+        if (serveis.web.requested) {valorSaved = valorSaved + serveis.web.valor}
+        if (serveis.seo.requested) {valorSaved = valorSaved + serveis.seo.valor}
+        if (serveis.ads.requested) {valorSaved = valorSaved + serveis.ads.valor}
+        
+        return serveis.web.requested
+          ? valorSaved + (detalls.idiomes * detalls.pagines * 30)
+          : valorSaved;
+      }),
+    [detalls, serveis]
+  );
 
   return (
     <>
@@ -45,29 +61,32 @@ function App() {
       <input
         type="checkbox"
         name="web"
-        value="500"
+        value={serveis.web.valor}
         onChange={handleInputChange}
+        checked={serveis.web.requested}
       />
-      <label for="web"> Una pàgina web - 500 €</label>
+      <label for="web"> Una pàgina web {serveis.web.valor} €</label>
       <br />
-      {serveis.web ? <Panell>{render}</Panell> : <></>}
+      {serveis.web.requested ? <Panell>{render}</Panell> : <></>}
       <input
         type="checkbox"
         name="seo"
-        value="300"
+        value={serveis.seo.valor}
         onChange={handleInputChange}
+        checked={serveis.seo.requested}
       />
-      <label for="seo"> Una consultoria SEO - 300 €</label>
+      <label for="seo"> Una consultoria SEO {serveis.seo.valor} €</label>
       <br />
       <input
         type="checkbox"
         name="ads"
-        value="200"
+        value={serveis.ads.valor}
         onChange={handleInputChange}
+        checked={serveis.ads.requested}
       />
-      <label for="ads"> Una campanya de Google Ads - 200 €</label>
+      <label for="ads"> Una campanya de Google Ads {serveis.ads.valor} €</label>
       <br />
-      <p>Preu: {pressupostServeis + calcDetalls()} €</p>
+      <p>Preu: {total} €</p>
     </>
   );
 }
