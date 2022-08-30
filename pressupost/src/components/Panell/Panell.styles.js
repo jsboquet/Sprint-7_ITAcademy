@@ -8,5 +8,5 @@ export const Panell = styled.div`
   border: 3px solid black;
   border-radius: 10px;
   line-height: 2;
-  width: 80%;
+  width: 81%;
 `;

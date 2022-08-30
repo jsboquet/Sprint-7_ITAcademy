@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Detalls as StyledDetalls } from "./Detalls.styles";
+import Popup from "../Popup/Popup";
 
 function Detalls() {
   // Estat dels detalls (pàgines i idiomes)
@@ -71,13 +72,16 @@ function Detalls() {
     }
   }, [detalls]);
 
+  // Funciona, però és una xapussa. Per un costat (aquí), monto i desmonto <Popup> mentre per allà l'amago amb display
+  // Cal netejar!!
+
   return {
     detalls,
     render: (
       <StyledDetalls>
         <div className="wrapperDetalls">
           <label for="pagines">Pàgines: </label>
-          <div>
+          <div className="wrapperInputNumber">
             <button onClick={increasePags} className="buttonDetalls">
               +
             </button>
@@ -93,11 +97,12 @@ function Detalls() {
             <button onClick={decreasePags} className="buttonDetalls">
               -
             </button>
+            <Popup idiomes={detalls.idiomes} pagines={detalls.pagines} />
           </div>
         </div>
         <div className="wrapperDetalls">
           <label for="idiomes">Idiomes: </label>
-          <div>
+          <div className="wrapperInputNumber">
             <button onClick={increaseLang} className="buttonDetalls">
               +
             </button>
@@ -113,6 +118,7 @@ function Detalls() {
             <button onClick={decreaseLang} className="buttonDetalls">
               -
             </button>
+            <Popup idiomes={detalls.idiomes} pagines={detalls.pagines} />
           </div>
         </div>
       </StyledDetalls>

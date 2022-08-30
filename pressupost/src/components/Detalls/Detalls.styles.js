@@ -10,6 +10,12 @@ export const Detalls = styled.div`
     justify-content: space-between;
   }
 
+  .wrapperInputNumber {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
   .inputDetalls {
     width: 50px;
     text-align: center;
