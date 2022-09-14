@@ -5,6 +5,6 @@ export const Contenidor = styled.div`
   width: 99vw;
   padding-top: 20vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  justify-content: center;
 `;

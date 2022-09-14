@@ -17,7 +17,7 @@ export const Detalls = styled.div`
   }
 
   .inputDetalls {
-    width: 50px;
+    width: 38px;
     text-align: center;
   }
 

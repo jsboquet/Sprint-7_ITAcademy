@@ -34,7 +34,6 @@ function Detalls() {
     });
     inputPagines.current.value = detalls.pagines;
   };
-
   const decreasePags = () => {
     if (detalls.pagines > 0) {
       setDetalls({
@@ -52,7 +51,6 @@ function Detalls() {
     });
     inputIdiomes.current.value = detalls.idiomes;
   };
-
   const decreaseLang = () => {
     if (detalls.idiomes > 0) {
       setDetalls({
@@ -71,9 +69,6 @@ function Detalls() {
       console.log(error);
     }
   }, [detalls]);
-
-  // Funciona, però és una xapussa. Per un costat (aquí), monto i desmonto <Popup> mentre per allà l'amago amb display
-  // Cal netejar!!
 
   return {
     detalls,

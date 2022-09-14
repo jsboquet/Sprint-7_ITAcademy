@@ -34,12 +34,12 @@ export const Popup = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 6px;
-    height: 6px;
-    padding: 8px;
+    width: 4px;
+    height: 4px;
+    padding: 6px;
     border-radius: 50%;
     margin-left: 10px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
     color: white;
     cursor: help;
