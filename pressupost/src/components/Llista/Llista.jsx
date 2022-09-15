@@ -1,31 +1,35 @@
 import { Llista as StyledLlista } from "./Llista.styles";
 
 const Llista = ({ pressupostos }) => {
-  const calcular = (pressu) => {
-    let valorSaved = 0;
+  const printServeis = (pressu) => {
+    let string = [];
+
     if (pressu.serveis.web.requested) {
-      valorSaved = valorSaved + pressu.serveis.web.valor;
+      string.push("web");
     }
     if (pressu.serveis.seo.requested) {
-      valorSaved = valorSaved + pressu.serveis.seo.valor;
+      string.push("seo");
     }
     if (pressu.serveis.ads.requested) {
-      valorSaved = valorSaved + pressu.serveis.ads.valor;
+      string.push("ads");
     }
-
-    return pressu.serveis.web.requested
-      ? valorSaved + pressu.detalls.idiomes * pressu.detalls.pagines * 30
-      : valorSaved;
-  };
+    return string.join(" ")
+  }
 
   return (
     <StyledLlista>
       <h3>Pressupostos Guardats</h3>
+      <div>
+        <button>Nom</button>
+        <button>Data</button>
+        <button>X</button>
+      </div>
       <table>
         <thead>
           <tr>
-            <th>Nom</th>
             <th>Client</th>
+            <th>Nom</th>
+            <th>Serveis</th>
             <th>Data</th>
             <th>Total</th>
           </tr>
@@ -33,10 +37,11 @@ const Llista = ({ pressupostos }) => {
         <tbody>
           {pressupostos.map((pressu) => (
             <tr key={pressu.data}>
-              <td>{pressu.serveis.nom}</td>
               <td>{pressu.serveis.client}</td>
-              <td>{pressu.data.toLocaleDateString()}</td>
-              <td>{calcular(pressu)} €</td>
+              <td>{pressu.serveis.nom}</td>
+              <td>{printServeis(pressu)}</td>
+              <td>{pressu.data.toLocaleDateString().slice(0, -5)}</td>
+              <td>{pressu.calcularTotal()} €</td>
             </tr>
           ))}
         </tbody>

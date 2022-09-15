@@ -113,7 +113,7 @@ function Detalls() {
             <button onClick={decreaseLang} className="buttonDetalls">
               -
             </button>
-            <Popup idiomes={detalls.idiomes} pagines={detalls.pagines} />
+            <Popup idiomes={inputIdiomes.value} pagines={inputPagines.value} />
           </div>
         </div>
       </StyledDetalls>

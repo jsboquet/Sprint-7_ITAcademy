@@ -77,7 +77,28 @@ const Pressupost = () => {
   // Afegir pressu a la llista si no està repetit!
   const savePressu = () => {
     const data = new Date();
-    const addObj = { serveis, detalls, data: data };
+    function calcularTotal() {
+      let valorSaved = 0;
+      if (this.serveis.web.requested) {
+        valorSaved = valorSaved + this.serveis.web.valor;
+      }
+      if (this.serveis.seo.requested) {
+        valorSaved = valorSaved + this.serveis.seo.valor;
+      }
+      if (this.serveis.ads.requested) {
+        valorSaved = valorSaved + this.serveis.ads.valor;
+      }
+      return this.serveis.web.requested
+        ? valorSaved + this.detalls.idiomes * this.detalls.pagines * 30
+        : valorSaved;
+    }
+    const addObj = {
+      serveis: { ...serveis },
+      detalls: { ...detalls },
+      data: data,
+      calcularTotal,
+    };
+
     if (savedPressus.length === 0) {
       setSavedPressus(() => [addObj]);
     } else {

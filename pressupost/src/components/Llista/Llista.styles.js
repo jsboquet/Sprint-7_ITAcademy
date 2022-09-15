@@ -11,12 +11,16 @@ export const Llista = styled.div`
   text-align: center;
 
   table {
-    font-size: 14px;
+    margin-top: 10px;
+    font-size: 12px;
     cursor: pointer;
+    font-family: arial;
 
     td {
-      margin: 8px;
+      padding: 2px 8px 2px 8px;
       border-bottom: 1px solid #ddd;
+      border-right: 0px;
+      border-left: 0px;
     }
 
     tr:hover {
