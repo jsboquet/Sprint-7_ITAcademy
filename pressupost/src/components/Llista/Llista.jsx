@@ -4,13 +4,13 @@ const Llista = ({ pressupostos }) => {
   const printServeis = (pressu) => {
     let string = [];
 
-    if (pressu.serveis.web.requested) {
+    if (pressu.web.requested) {
       string.push("web");
     }
-    if (pressu.serveis.seo.requested) {
+    if (pressu.seo.requested) {
       string.push("seo");
     }
-    if (pressu.serveis.ads.requested) {
+    if (pressu.ads.requested) {
       string.push("ads");
     }
     return string.join(" ")
@@ -39,7 +39,7 @@ const Llista = ({ pressupostos }) => {
             <tr key={pressu.data}>
               <td>{pressu.serveis.client}</td>
               <td>{pressu.serveis.nom}</td>
-              <td>{printServeis(pressu)}</td>
+              <td>{printServeis(pressu.serveis)}</td>
               <td>{pressu.data.toLocaleDateString().slice(0, -5)}</td>
               <td>{pressu.calcularTotal()} €</td>
             </tr>

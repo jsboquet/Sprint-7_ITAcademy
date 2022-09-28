@@ -1,7 +1,5 @@
 import Benvinguda from "../components/Benvinguda/Benvinguda";
 
-function Welcome() {
-  return <Benvinguda></Benvinguda>;
-}
+const Welcome = () => <Benvinguda />;
 
 export default Welcome;

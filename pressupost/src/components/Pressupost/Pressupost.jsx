@@ -8,13 +8,24 @@ const Pressupost = () => {
   const [serveis, setServeis] = useState(() => {
     const localSaved = localStorage.getItem("serveis");
     const estatInicial = JSON.parse(localSaved);
-    return {
-      nom: estatInicial.nom || "",
-      client: estatInicial.client || "",
-      web: { requested: estatInicial.web.requested || false, valor: 500 },
-      seo: { requested: estatInicial.seo.requested || false, valor: 300 },
-      ads: { requested: estatInicial.ads.requested || false, valor: 200 },
-    };
+    console.log(estatInicial);
+    if (estatInicial === null) {
+      return {
+        nom: "",
+        client: "",
+        web: { requested: false, valor: 500 },
+        seo: { requested: false, valor: 300 },
+        ads: { requested: false, valor: 200 },
+      };
+    } else {
+      return {
+        nom: estatInicial.nom || "",
+        client: estatInicial.client || "",
+        web: { requested: estatInicial.web.requested || false, valor: 500 },
+        seo: { requested: estatInicial.seo.requested || false, valor: 300 },
+        ads: { requested: estatInicial.ads.requested || false, valor: 200 },
+      };
+    }
   });
 
   // Funció per quan canvien els checkbox

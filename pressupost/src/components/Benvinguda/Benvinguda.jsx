@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Contenidor from "../Contenidor/Contenidor";
-import { Benvinguda as StyledBenvinguda } from "./Benvinguda.styles";
+import { StyledBenvinguda } from "./Benvinguda.styles";
 
 function Benvinguda() {
   const navigate = useNavigate();

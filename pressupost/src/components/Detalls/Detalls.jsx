@@ -7,10 +7,17 @@ function Detalls() {
   const [detalls, setDetalls] = useState(() => {
     const localSaved = localStorage.getItem("detalls");
     const valorInicial = JSON.parse(localSaved);
-    return {
-      pagines: valorInicial.pagines || 1,
-      idiomes: valorInicial.idiomes || 1,
-    };
+    if (valorInicial === null) {
+      return {
+        pagines: 1,
+        idiomes: 1,
+      };
+    } else {
+      return {
+        pagines: valorInicial.pagines,
+        idiomes: valorInicial.idiomes,
+      };
+    }
   });
 
   // Introducció amb teclat de valors a l'input
